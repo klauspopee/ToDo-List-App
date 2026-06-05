@@ -1,18 +1,20 @@
 // Tasks
-// [1] use sweet alert if input is empty
-// [2] check if the task is alredy exists
-// [3] creat delete all tasks button
-// [4] creat finished all button
-// [5] add tasks to local storage
+// [1] use sweet alert if input is empty  [Done]
+// [2] check if the task is alredy exists [Done]
+// [3] creat delete all tasks button      [Done]
+// [4] creat finished all button          [Done]
+// [5] add tasks to local storage         [X]
+
 
 
 // setting up variables
 let Input = document.querySelector('.add-task input');
 let AddBtn = document.querySelector('.add-task .plus');
 let tasksContainer = document.querySelector('.tasks-content');
-
 let tasksCount = document.querySelector('.tasks-count span');
 let tasksFinished = document.querySelector('.tasks-completed span');
+let deleteAllBtn = document.querySelector('.delete-all');
+let allFinishedBtn = document.querySelector('.all-finished'); 
 
 //Focus on input feild
 window.onload = function () {
@@ -26,6 +28,7 @@ AddBtn.onclick = function () {
     if (Input.value === '') {
         console.log('empty')
         // [1] add sweet alert here
+        Swal.fire("Input Is Empty")
     } else {
         let noTasksMsg = document.querySelector('.no-tasks-message');
 
@@ -36,6 +39,9 @@ AddBtn.onclick = function () {
             noTasksMsg.remove();
         }
 
+        // check if the task alredy exists
+        taskExist(Input.value)
+
 
         // creat span  element
         let mainSpan = document.createElement('span');
@@ -45,6 +51,8 @@ AddBtn.onclick = function () {
 
         // creat main span text
         let text = document.createTextNode(Input.value);
+
+
 
         // creat the delete btn text
         let deleteText = document.createTextNode('Delete');
@@ -65,7 +73,9 @@ AddBtn.onclick = function () {
         mainSpan.appendChild(deleteBtn);
 
         // add task to the container 
-        tasksContainer.appendChild(mainSpan);   
+        tasksContainer.appendChild(mainSpan); 
+
+        // window.localStorage.setItem('task',mainSpan.textContent);
 
         // empty the input 
         Input.value = ''
@@ -131,4 +141,28 @@ function calculateTasks () {
     
     // // calculate Completed tasks
     tasksFinished.innerHTML = document.querySelectorAll('.tasks-content .finished').length;
+}
+
+
+// function to check if the task alredy exists 
+function taskExist (text) {
+        let taskBoxes = document.querySelectorAll('.task-box'); 
+        for(i = 0 ; i < taskBoxes.length; i++) {
+            if (taskBoxes[i].firstChild.textContent === text) {
+                Swal.fire('task alredy exists');
+            }
+        } 
+}
+
+// all finished button 
+allFinishedBtn.onclick = function () {
+    document.querySelectorAll('.task-box').forEach(function(task) {
+        task.classList.add('finished')
+    })
+}
+
+// delete all button 
+deleteAllBtn.onclick = function () {
+    tasksContainer.replaceChildren();
+    creatNoTasks();
 }

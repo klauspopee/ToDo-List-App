@@ -100,3 +100,19 @@ body {
 .task-stats .tasks-completed span {
     background-color: #03a9f4;
 }
+.task-stats button {
+    margin-top:10px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: white;
+}
+.task-stats .delete-all {
+    background-color: #e91e63;
+    float: left;
+}
+.task-stats .all-finished {
+    background-color: #009688;
+    float: right;
+}
